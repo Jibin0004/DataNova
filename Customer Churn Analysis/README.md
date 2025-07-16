@@ -3,5 +3,8 @@ This Power BI project focuses on analyzing customer churn data to uncover patter
 
 
 
-![Customer Churn Dashboard](https://github.com/user-attachments/assets/2d452293-ac60-4b39-8cd6-5f5b2ec9f3b3)
+
+<img width="1339" height="788" alt="Image" src="https://github.com/user-attachments/assets/62a45fb2-1117-46fb-95ae-f83a6ec6e6a0" />
+
+<img width="1334" height="793" alt="Image" src="https://github.com/user-attachments/assets/99a86720-cbd0-4d60-ac5a-7c3cf2943965" />
 
