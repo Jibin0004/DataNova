@@ -8,3 +8,4 @@ Key features:
 - Cosine similarity with TF-IDF and CountVectorizer
 - Suggests similar movies based on input title
 
+![Image](https://github.com/user-attachments/assets/dc6b1cc0-0bd2-44f6-bf35-f3724e69f554)
