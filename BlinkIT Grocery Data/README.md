@@ -8,3 +8,4 @@ Key insights included:
 - Customer purchase patterns and order frequency
 - Regional or store-wise sales comparison
 
+<img width="931" height="480" alt="Image" src="https://github.com/user-attachments/assets/6ef16f03-61c3-4c6e-ac7a-8bcdd102742a" />
