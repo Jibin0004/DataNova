@@ -1,5 +1,5 @@
 
-# 📦 aa
+# DataNova
 
 This repository contains a collection of personal projects, experiments, or utility scripts developed for learning, prototyping, or testing ideas. It may include notebooks, small apps, dashboards, or analysis code.
 
