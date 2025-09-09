@@ -4,10 +4,15 @@ This repository contains my submission for the Data Science Internship Assignmen
 Project Structure
 The project is structured according to the assignment's guidelines, ensuring a clean and organized repository:
 
-ds_<candidate_name>/
+ds_<candidate_name>
+/
+
 ├── notebook_1.ipynb
+
 ├── csv_files/
+
 ├── outputs/
+
 └── README.md
 
 notebook_1.ipynb: The primary Jupyter notebook, which contains all the code for data processing, analysis, and visualization.
