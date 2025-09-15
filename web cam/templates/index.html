@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture Aptitude Question</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #0056b3;
+        }
+
+        video, canvas {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        select {
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #responseText {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Help Bar Styling */
+        #helpBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #helpContent {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        #helpContent h2 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+
+        #helpContent button {
+            float: right;
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Webcam Capture</h1>
+
+        <div>
+            <label for="cameraSelect">Select Camera:</label>
+            <select id="cameraSelect">
+                <option value="user">Front Camera</option>
+                <option value="environment">Back Camera</option>
+            </select>
+        </div>
+
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+        
+        <br>
+
+        <div id="controls">
+            <button id="captureButton" onclick="captureImage()">Capture</button>
+            <button id="goBackButton" onclick="goBackToCamera()" style="display:none;">Go Back</button>
+            <button id="resetButton" onclick="resetApp()">Reset</button>
+            <button onclick="showHelp()">Help</button>
+        </div>
+
+        <p id="responseText"></p>
+    </main>
+
+    <div id="helpBar" style="display:none;">
+        <div id="helpContent">
+            <h2>Help & Troubleshooting</h2>
+            <p><strong>1. Camera Access Error:</strong> If the video feed does not appear, your browser or device may have blocked camera access. Please check your browser's site settings or your phone's system settings to enable camera permissions for this page.</p>
+            <p><strong>2. Server Error:</strong> If you receive a "Could not get a response from the server" message, the backend may not be running. Ensure that your `app.py` script is running and your device is on the same network as the computer hosting the server.</p>
+            <p><strong>3. Blank Answer:</strong> If you get a blank or unhelpful answer, try taking a clearer, better-lit picture of the question. Ensure the question is fully visible in the frame.</p>
+            <button onclick="hideHelp()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const responseText = document.getElementById('responseText');
+        const captureButton = document.getElementById('captureButton');
+        const goBackButton = document.getElementById('goBackButton');
+        const cameraSelect = document.getElementById('cameraSelect');
+        const helpBar = document.getElementById('helpBar');
+
+        let currentStream = null;
+
+        window.onload = () => {
+            startStream(cameraSelect.value);
+        };
+
+        cameraSelect.addEventListener('change', () => {
+            startStream(cameraSelect.value);
+        });
+
+        function startStream(facingMode) {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+            
+            captureButton.disabled = true;
+            responseText.innerText = "Starting camera...";
+            video.style.display = 'block';
+            goBackButton.style.display = 'none';
+
+            const constraints = {
+                video: {
+                    facingMode: facingMode
+                }
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then(stream => {
+                video.srcObject = stream;
+                currentStream = stream;
+                captureButton.disabled = false;
+                responseText.innerText = "";
+            })
+            .catch(err => {
+                console.error("Error accessing camera", err);
+                responseText.innerText = `Error: Could not access the camera. Please check camera permissions.`;
+                
+                // Fallback for devices that don't have a front or back camera
+                if (facingMode === 'environment') {
+                    console.log("Environment camera failed, trying user camera as fallback.");
+                    startStream('user');
+                } else if (facingMode === 'user') {
+                    console.log("User camera failed, trying environment camera as fallback.");
+                    startStream('environment');
+                }
+            });
+        }
+
+        function captureImage() {
+            captureButton.disabled = true;
+            responseText.innerText = "Processing...";
+            
+            video.style.display = 'none';
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const image = canvas.toDataURL('image/png');
+
+            fetch('/process', {
+                method: 'POST',
+                body: JSON.stringify({ image: image }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                responseText.innerText = "Answer: " + data.answer;
+            })
+            .catch(err => {
+                console.error("Error fetching data", err);
+                responseText.innerText = "Error: Could not get a response from the server. Click 'Help' for more info.";
+            })
+            .finally(() => {
+                captureButton.style.display = 'none';
+                goBackButton.style.display = 'inline-block';
+            });
+        }
+
+        function goBackToCamera() {
+            goBackButton.style.display = 'none';
+            captureButton.style.display = 'inline-block';
+            responseText.innerText = "";
+            
+            video.style.display = 'block';
+            startStream(cameraSelect.value);
+        }
+
+        function resetApp() {
+            window.location.reload();
+        }
+
+        function showHelp() {
+            helpBar.style.display = 'flex';
+        }
+
+        function hideHelp() {
+            helpBar.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
