@@ -49,8 +49,7 @@ Marketing and inventory alignment
 
 Order processing analysis
 
-
 6. Screenshots
-   <img width="1110" height="631" alt="Screenshot 2025-10-05 031000" src="https://github.com/user-attachments/assets/113b3dab-9dad-43cf-a602-818137478326" />
+<img width="1110" height="631" alt="Screenshot 2025-10-05 031000" src="https://github.com/user-attachments/assets/113b3dab-9dad-43cf-a602-818137478326" />
 
 
