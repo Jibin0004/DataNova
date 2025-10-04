@@ -1,9 +1,9 @@
-Sales Analysis Dashboard (Power BI)
+**Sales Analysis Dashboard (Power BI)**
 
 This repository contains the source files for a dynamic and interactive Sales Analysis Dashboard built using Microsoft Power BI Desktop. The project helps turn raw sales data into actionable business insights using effective data modeling and visual storytelling.
 
 
-Project Overview
+**Project Overview**
 
 The dashboard offers interactive visuals and filtering options to help users monitor and analyze key sales metrics at a glance.
 
@@ -16,29 +16,7 @@ Order Flow – Visualize the flow and status of incoming orders.
 Business KPIs – Track performance metrics like revenue, profit %, average order value, and sales growth.
 
 
-	
-Features
 
-Responsive design with slicers for filtering by time period, region, or product.
-
-KPI cards for instant performance review.
-
-Drill-down capability for deeper analysis.
-
-Tooltip integration for additional context on hover.
-
-
-
-
-Use Cases
-
-Executive-level sales performance reviews
-
-Sales strategy meetings
-
-Marketing and inventory alignment
-
-Order processing analysis
 
 
 
